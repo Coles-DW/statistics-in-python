@@ -1,0 +1,65 @@
+Mean and median
+In this chapter, you'll be working with the food_consumption dataset from 2018 Food Carbon Footprint Index by nu3. The food_consumption dataset contains the number of kilograms of food consumed per person per year in each country and food category (consumption), and its carbon footprint (co2_emissions) measured in kilograms of carbon dioxide, or CO2.
+
+In this exercise, you'll compute measures of center to compare food consumption in the US and Belgium using your pandas and numpy skills.
+
+pandas is imported as pd for you and food_consumption is pre-loaded.
+
+food_consumption.head()
+
+# Import numpy with alias np
+import numpy as np
+
+# Subset country for USA: usa_consumption
+usa_consumption = food_consumption[food_consumption["country"] == "USA"]
+
+usa_consumption.head()
+
+# Calculate mean consumption in USA
+print(np.mean(usa_consumption['consumption']))
+
+# Calculate median consumption in USA
+print(np.median(usa_consumption['consumption']))
+
+Mean vs. median
+In the video, you learned that the mean is the sum of all the data points divided by the total number of data points, and the median is the middle value of the dataset where 50% of the data is less than the median, and 50% of the data is greater than the median. In this exercise, you'll compare these two measures of center.
+
+pandas is loaded as pd, numpy is loaded as np, and food_consumption is available.
+
+# Import matplotlib.pyplot with alias plt
+import matplotlib.pyplot as plt
+
+# Subset for food_category equals rice
+food_consumption.head()
+rice_consumption = food_consumption[food_consumption['food_category'] == 'rice']
+
+# Histogram of co2_emission for rice and show plot
+rice_consumption['co2_emission'].hist()
+plt.show()
+
+# Subset for food_category equals rice
+rice_consumption = food_consumption[food_consumption['food_category'] == 'rice']
+
+# Calculate mean and median of co2_emission with .agg()
+print(rice_consumption['co2_emission'].agg([np.mean, np.median]))
+
+Variance and standard deviation
+Variance and standard deviation are two of the most common ways to measure the spread of a variable, and you'll practice calculating these in this exercise. Spread is important since it can help inform expectations. For example, if a salesperson sells a mean of 20 products a day, but has a standard deviation of 10 products, there will probably be days where they sell 40 products, but also days where they only sell one or two. Information like this is important, especially when making predictions.
+
+pandas has been imported as pd, numpy as np, and matplotlib.pyplot as plt; the food_consumption DataFrame is also available.
+
+food_consumption.head()
+
+# Print variance and sd of co2_emission for each food_category
+print(food_consumption.groupby('food_category')['co2_emission'].agg([np.var, np.std]))
+
+# Create histogram of co2_emission for food_category 'beef'
+food_consumption[food_consumption['food_category'] == 'beef']['co2_emission'].hist()
+plt.show()
+
+# Create histogram of co2_emission for food_category 'eggs'
+plt.figure()
+food_consumption[food_consumption['food_category'] == 'eggs']['co2_emission'].hist()
+plt.show()
+
+Superb spread measurement! Beef has the largest amount of variation in its CO2 emissions, while eggs have a relatively small amount of variation.
