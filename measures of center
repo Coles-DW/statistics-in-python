@@ -63,3 +63,108 @@ food_consumption[food_consumption['food_category'] == 'eggs']['co2_emission'].hi
 plt.show()
 
 Superb spread measurement! Beef has the largest amount of variation in its CO2 emissions, while eggs have a relatively small amount of variation.
+
+Quartiles, quantiles, and quintiles
+Quantiles are a great way of summarizing numerical data since they can be used to measure center and spread, as well as to get a sense of where a data point stands in relation to the rest of the data set. For example, you might want to give a discount to the 10% most active users on a website.
+
+In this exercise, you'll calculate quartiles, quintiles, and deciles, which split up a dataset into 4, 5, and 10 pieces, respectively.
+
+Both pandas as pd and numpy as np are loaded and food_consumption is available.
+
+# Calculate the quartiles of co2_emission
+print(np.quantile(food_consumption['co2_emission'], [0, 0.25, 0.5, 0.75, 1]))
+
+# Calculate the quintiles of co2_emission
+print(np.quantile(food_consumption['co2_emission'], [0, 0.2, 0.4, 0.6, 0.8, 1]))
+
+# Calculate the deciles of co2_emission
+print(np.quantile(food_consumption['co2_emission'], [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]))
+
+Finding outliers using IQR
+Outliers can have big effects on statistics like mean, as well as statistics that rely on the mean, such as variance and standard deviation. Interquartile range, or IQR, is another way of measuring spread that's less influenced by outliers. IQR is also often used to find outliers. If a value is less than 
+ or greater than 
+, it's considered an outlier. In fact, this is how the lengths of the whiskers in a matplotlib box plot are calculated.
+
+Diagram of a box plot showing median, quartiles, and outliers
+
+In this exercise, you'll calculate IQR and use it to find some outliers. pandas as pd and numpy as np are loaded and food_consumption is available.
+
+food_consumption.head()
+
+# Calculate total co2_emission per country: emissions_by_country
+emissions_by_country = food_consumption.groupby('country')['co2_emission'].sum()
+
+print(emissions_by_country)
+
+# Calculate total co2_emission per country: emissions_by_country
+emissions_by_country = food_consumption.groupby('country')['co2_emission'].sum().reset_index()
+
+emissions_by_country.head()
+
+# Compute the first and third quartiles and IQR of emissions_by_country
+q1 = np.quantile(emissions_by_country['co2_emission'], 0.25)
+q3 = np.quantile(emissions_by_country['co2_emission'], 0.75)
+iqr = np.quantile(emissions_by_country['co2_emission'], 0.75) - np.quantile(emissions_by_country['co2_emission'], 0.25)
+
+OR
+
+# Calculate total co2_emission per country: emissions_by_country
+emissions_by_country = food_consumption.groupby('country')['co2_emission'].sum()
+
+# Compute the first and third quantiles and IQR of emissions_by_country
+q1 = np.quantile(emissions_by_country, 0.25)
+q3 = np.quantile(emissions_by_country, 0.75)
+iqr = q3 - q1
+
+# Calculate the lower and upper cutoffs for outliers
+lower = q1 - 1.5 * iqr
+upper = q3 + 1.5 * iqr
+
+# Subset emissions_by_country to find outliers
+outliers = emissions_by_country[(emissions_by_country < lower) | (emissions_by_country > upper)]
+print(outliers)
+
+Calculating probabilities
+You're in charge of the sales team, and it's time for performance reviews, starting with Amir. As part of the review, you want to randomly select a few of the deals that he's worked on over the past year so that you can look at them more deeply. Before you start selecting deals, you'll first figure out what the chances are of selecting certain deals.
+
+Recall that the probability of an event can be calculated by
+ 
+
+Both pandas as pd and numpy as np are loaded and amir_deals is available.
+
+amir_deals.info()
+
+# Count the deals for each product
+counts = amir_deals.value_counts('product')
+print(counts)
+
+OR
+
+# Count the deals for each product
+counts = amir_deals['product'].value_counts()
+print(counts)
+
+#Calculate the probability of selecting a deal for the different product types by dividing the counts by the total number of deals Amir worked on. Save this as probs.
+# Calculate probability of picking a deal with each product
+probs = counts/counts.sum()
+
+print(probs)
+
+Sampling deals
+In the previous exercise, you counted the deals Amir worked on. Now it's time to randomly pick five deals so that you can reach out to each customer and ask if they were satisfied with the service they received. You'll try doing this both with and without replacement.
+
+Additionally, you want to make sure this is done randomly and that it can be reproduced in case you get asked how you chose the deals, so you'll need to set the random seed before sampling from the deals.
+
+Both pandas as pd and numpy as np are loaded and amir_deals is available.
+
+# Set random seed - this means you will get the same random group every time. CHanging the seed number changes the random group returned.
+np.random.seed(24)
+
+# Sample 5 deals without replacement
+sample_without_replacement = amir_deals.sample(5)
+print(sample_without_replacement)
+
+# Sample 5 deals with replacement
+sample_with_replacement = amir_deals.sample(5, replace = True)
+print(sample_with_replacement)
+
