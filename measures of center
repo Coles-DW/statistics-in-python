@@ -303,3 +303,48 @@ deals = binom.rvs(3, 0.3, size=52)
 print(np.mean(deals))
 
 Brilliant binomial simulation! In this simulated year, Amir won 0.83 deals on average each week.
+
+- Continuous uniform distribution was introduced with the example of waiting for a city bus, where the wait time can be any value between 0 and 12 minutes. This distribution is represented by a continuous line, indicating an equal probability of waiting any length of time within the specified range.
+- You calculated the probability of waiting between 4 and 7 minutes as 25%, by finding the area of the rectangle formed on the probability distribution graph. The calculation used was (7-4) * (1/12).
+- To work with continuous distributions in Python, you used the uniform function from scipy.stats. For example, to find the probability of waiting less than 7 minutes, you used:
+- from scipy.stats import uniform
+- prob_less_than_7 = uniform.cdf(7, 0, 12)
+- You also learned how to generate random numbers according to the uniform distribution using uniform.rvs(min, max, size), which is useful for simulating real-world scenarios and understanding the distribution of outcomes.
+- The lesson emphasized that the total area under a probability distribution curve equals 1, a fundamental property that applies to all types of distributions, including those you'll learn about later like the normal and exponential distributions.
+
+Calculating binomial probabilities
+Just as in the last exercise, assume that Amir wins 30% of deals. He wants to get an idea of how likely he is to close a certain number of deals each week. In this exercise, you'll calculate what the chances are of him closing different numbers of deals using the binomial distribution.
+
+binom is imported from scipy.stats.
+
+# Probability of closing 3 out of 3 deals
+# binom.pmf(num heads, num trials, prob of heads)
+prob_3 = binom.pmf(3, 3, 0.3)
+
+print(prob_3)
+
+# Probability of closing <= 1 deal out of 3 deals
+prob_less_than_or_equal_1 = binom.cdf(1, 3, 0.3)
+
+print(prob_less_than_or_equal_1)
+
+# Probability of closing > 1 deal out of 3 deals
+prob_greater_than_1 = 1 - binom.cdf(1, 3, 0.3)
+
+print(prob_greater_than_1)
+
+How many sales will be won?
+Now Amir wants to know how many deals he can expect to close each week if his win rate changes. Luckily, you can use your binomial distribution knowledge to help him calculate the expected value in different situations. Recall from the video that the expected value of a binomial distribution can be calculated by n x p.
+
+# Expected number won with 30% win rate
+won_30pct = 3 * 0.3
+print(won_30pct)
+
+# Expected number won with 25% win rate
+won_25pct = 3 * 0.25
+print(won_25pct)
+
+# Expected number won with 35% win rate
+won_35pct = 3 * 0.35
+print(won_35pct)
+
