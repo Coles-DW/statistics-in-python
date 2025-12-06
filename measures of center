@@ -1,4 +1,4 @@
-## Summary statistics
+## Measures of center
 Mean and median
 In this chapter, you'll be working with the food_consumption dataset from 2018 Food Carbon Footprint Index by nu3. The food_consumption dataset contains the number of kilograms of food consumed per person per year in each country and food category (consumption), and its carbon footprint (co2_emissions) measured in kilograms of carbon dioxide, or CO2.
 
@@ -43,6 +43,8 @@ rice_consumption = food_consumption[food_consumption['food_category'] == 'rice']
 
 # Calculate mean and median of co2_emission with .agg()
 print(rice_consumption['co2_emission'].agg([np.mean, np.median]))
+
+## Measures of spread
 
 Variance and standard deviation
 Variance and standard deviation are two of the most common ways to measure the spread of a variable, and you'll practice calculating these in this exercise. Spread is important since it can help inform expectations. For example, if a salesperson sells a mean of 20 products a day, but has a standard deviation of 10 products, there will probably be days where they sell 40 products, but also days where they only sell one or two. Information like this is important, especially when making predictions.
@@ -125,7 +127,7 @@ upper = q3 + 1.5 * iqr
 outliers = emissions_by_country[(emissions_by_country < lower) | (emissions_by_country > upper)]
 print(outliers)
 
-## Calculating probabilities
+## Measuring chance
 You're in charge of the sales team, and it's time for performance reviews, starting with Amir. As part of the review, you want to randomly select a few of the deals that he's worked on over the past year so that you can look at them more deeply. Before you start selecting deals, you'll first figure out what the chances are of selecting certain deals.
 
 Recall that the probability of an event can be calculated by
@@ -168,6 +170,8 @@ print(sample_without_replacement)
 # Sample 5 deals with replacement
 sample_with_replacement = amir_deals.sample(5, replace = True)
 print(sample_with_replacement)
+
+## Probability distributions
 
 Creating a probability distribution
 A new restaurant opened a few months ago, and the restaurant's management wants to optimize its seating space based on the size of the groups that come most often. On one night, there are 10 groups of people waiting to be seated at the restaurant, but instead of being called in the order they arrived, they will be called randomly. In this exercise, you'll investigate the probability of groups of different sizes getting picked first. Data on each of the ten groups is contained in the restaurant_groups DataFrame.
@@ -712,3 +716,17 @@ Neighborhood
 Smoking status
 
 Gender
+
+Correlation Coefficients: You discovered that correlation coefficients measure the strength of linear relationships between variables. However, they can be misleading when the relationship is not linear, as demonstrated with quadratic relationships where a low correlation coefficient might not accurately reflect the strength of the relationship.
+
+Data Transformation: You explored how transforming data, such as applying a logarithmic transformation to skewed data, can reveal stronger linear relationships. For example, transforming body weight data with np.log made the relationship between log-transformed body weight and awake time more linear, increasing the correlation coefficient from 0.3 to 0.57.
+
+Spurious Correlations and Confounders: You learned about spurious correlations, where two variables appear to be correlated but are not causally related. The importance of identifying confounding variables, like smoking in the relationship between coffee consumption and lung cancer, was highlighted to avoid misleading conclusions.
+
+Practical Applications: Exercises included analyzing data for spurious correlations, transforming variables to better understand their relationships, and identifying potential confounders in research scenarios.
+
+Study types
+While controlled experiments are ideal, many situations and research questions are not conducive to a controlled experiment. In a controlled experiment, causation can likely be inferred if the control and test groups have similar characteristics and don't have any systematic difference between them. On the other hand, causation cannot usually be inferred from observational studies, whose results are often misinterpreted as a result.
+
+In this exercise, you'll practice distinguishing controlled experiments from observational studies.
+
